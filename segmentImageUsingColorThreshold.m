@@ -14,16 +14,16 @@ function [maskedRGBImage] = segmentImageUsingColorThreshold(RGB)
 I = rgb2lab(RGB);
 
 % Define thresholds for channel 1 based on histogram settings
-channel1Min = 15.165;
-channel1Max = 59.339;
+channel1Min = 3.882;
+channel1Max = 18.635;
 
 % Define thresholds for channel 2 based on histogram settings
-channel2Min = 40.126;
-channel2Max = 61.687;
+channel2Min = 19.469;
+channel2Max = 42.798;
 
 % Define thresholds for channel 3 based on histogram settings
-channel3Min = -64.399;
-channel3Max = -48.707;
+channel3Min = -55.388;
+channel3Max = -26.576;
 
 % Create mask based on chosen histogram thresholds
 sliderBW = (I(:,:,1) >= channel1Min ) & (I(:,:,1) <= channel1Max) & ...
