@@ -1,7 +1,6 @@
-function [imagenRGB2Anios] = obtenerImageSegmented()
+function [imagenRGB2Anios] = obtenerImageSegmented(imageName)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-imageName='san_antonio_no_soleado.tif';
 I = imread(imageName);
 
 Band1=I(:,:,1);

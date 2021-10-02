@@ -1,10 +1,9 @@
-function [] = procesarLabelsResult(labels,imageSegmented)
+function [] = procesarLabelsResult(labels,imageSegmented, nombreImagen, lote, task)
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
 %limiteSuperior=10;
 limiteInferior=7;
-nombreImagen = 'odm_orthophoto_15_07.tif';
 for k = limiteInferior:limiteSuperior
     [B,M] = bwboundaries(labels==k,'noholes');
     points=py.list({});
@@ -42,7 +41,7 @@ for k = limiteInferior:limiteSuperior
         %imshow(plantSeparated)
         ndvi=obtainNDVIAvg(plantSeparated);
         statisticData=getStatisticsVariables(plantSeparated);
-        py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage);
+        py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage,task,lote);
     end
     %points
     %pause(2)
