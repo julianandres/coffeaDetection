@@ -10,7 +10,7 @@ import time
 def plantArrayToString(plant):
   print(plant.tolist())
 
-def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage):
+def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lote):
   
   obj ={         "type": "Polygon",
                   "coordinates": [
@@ -18,7 +18,7 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage):
                   ]
               }
   areasCalc=area(obj)
-  volumenCalc=obtenerVolumen(pointsImage)
+  volumenCalc=obtenerVolumen(pointsImage,task)
   data = json.dumps(data)
   centro = json.dumps(centro)
   print("Volumen")
@@ -27,10 +27,10 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage):
     try:
       cnx = mysql.connector.connect(user='root',password="root", database="suite2")
       print("*Valores a Insertar*")
-      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic,lote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
       print(sql)
       mycursor = cnx.cursor()
-      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic))
+      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic,lote))
       cnx.commit()
 
       print(mycursor.rowcount, "record inserted.")
@@ -47,9 +47,8 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage):
       cnx.close()
 
 
-def obtenerVolumen(data):
+def obtenerVolumen(data,task):
    #print(data)
-   task="121acf05-fe78-4587-ade9-42b467bfa233"
    urlBase="http://localhost:8000/api/plugins/measure/task/"+task+"/volume"
    baseUrlVolumeCheck=urlBase+"/check/"
    baseUrlVolumeGet = urlBase+"/get/"
