@@ -21,16 +21,17 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lot
   volumenCalc=obtenerVolumen(pointsImage,task)
   data = json.dumps(data)
   centro = json.dumps(centro)
+  pointsImage=json.dumps(pointsImage)
   print("Volumen")
   print(volumenCalc)
   if not volumenCalc == "":
     try:
       cnx = mysql.connector.connect(user='root',password="root", database="suite2")
       print("*Valores a Insertar*")
-      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic,lote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic,cod_lote,contorno_image_separated) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
       print(sql)
       mycursor = cnx.cursor()
-      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic,lote))
+      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic,lote,pointsImage))
       cnx.commit()
 
       print(mycursor.rowcount, "record inserted.")
@@ -63,9 +64,9 @@ def obtenerVolumen(data,task):
         }
       }
    headers={
-      "X-CSRFToken": "Kp1HAQqEb9Py49lfAgBfoqbFPdaFzxiDw96wzJ6hsiG0D64li04FR2eDN7NAld9T",
+      "X-CSRFToken": "3LVEvpzIN99u1iT8OhJcZXVWReOiwiRxu4Z3xv83WeLndQLiWigmvpGnA4Fi3E9E",
       "Content-Type": "application/json",
-      "Cookie": "AUTHJSESSIONID=D626CBECDD89747B668E030A96FD92D1; csrftoken=Kp1HAQqEb9Py49lfAgBfoqbFPdaFzxiDw96wzJ6hsiG0D64li04FR2eDN7NAld9T; sessionid=falndzrrwqdbgzv3xrc918lp7njqgf8n"
+      "Cookie": "AUTHJSESSIONID=681FFDFE03A0C0980792241E6015CA6D; csrftoken=3LVEvpzIN99u1iT8OhJcZXVWReOiwiRxu4Z3xv83WeLndQLiWigmvpGnA4Fi3E9E; sessionid=zqtao3m4h95pn9y48c01ba3asvjxnhdy"
       }
    #print(headers)
    taskIds= requests.post(urlBase,data=json.dumps(obj), headers=headers)
