@@ -1,9 +1,9 @@
 function [] = procesarLabelsResult(labels,imageSegmented, nombreImagen, lote, task)
 %UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
+%%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-%limiteSuperior=10;
-limiteInferior=7;
+%limiteSuperior=250;
+limiteInferior=1639;
 for k = limiteInferior:limiteSuperior
     [B,M] = bwboundaries(labels==k,'noholes');
     points=py.list({});
@@ -24,10 +24,10 @@ for k = limiteInferior:limiteSuperior
         minY=min(boundar(:,2));
         maxY=max(boundar(:,2));
         pointsImage=py.list({});
-        point1=py.transformCoords.pixel2coord(minX,minY,nombreImagen);
-        point2=py.transformCoords.pixel2coord(minX,maxY,nombreImagen);
-        point3=py.transformCoords.pixel2coord(maxX,maxY,nombreImagen);
-        point4=py.transformCoords.pixel2coord(maxX,minY,nombreImagen);
+        point1=py.transformCoords.pixel2coord(minY,minX,nombreImagen);
+        point2=py.transformCoords.pixel2coord(maxY,minX,nombreImagen);
+        point3=py.transformCoords.pixel2coord(maxY,maxX,nombreImagen);
+        point4=py.transformCoords.pixel2coord(minY,maxX,nombreImagen);
         pointsImage.append(point1);
         pointsImage.append(point2);
         pointsImage.append(point3);
