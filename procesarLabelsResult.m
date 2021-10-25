@@ -3,7 +3,7 @@ function [] = procesarLabelsResult(labels,imageSegmented, nombreImagen, lote, ta
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
 %limiteSuperior=250;
-limiteInferior=1639;
+limiteInferior=7;
 for k = limiteInferior:limiteSuperior
     [B,M] = bwboundaries(labels==k,'noholes');
     points=py.list({});

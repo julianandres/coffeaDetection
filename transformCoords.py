@@ -18,7 +18,7 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lot
                   ]
               }
   areasCalc=area(obj)
-  volumenCalc=obtenerVolumen(pointsImage,task)
+  volumenCalc=obtenerVolumen(data,task)
   data = json.dumps(data)
   centro = json.dumps(centro)
   pointsImage=json.dumps(pointsImage)
