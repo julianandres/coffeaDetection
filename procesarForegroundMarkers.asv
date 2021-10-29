@@ -6,7 +6,7 @@ labels = watershed(gmagFgm);
 %% Dilatación del mismo hasta un radio aproximado. 
 limiteSuperior=max(labels, [], 'all');
 %limiteSuperior=49;
-limiteInferior=218;
+limiteInferior=6;
 imageResult= imageSegmented(:,:,3);
 for k = limiteInferior:limiteSuperior
     plantIndividual=labels==k;
@@ -27,10 +27,9 @@ for k = limiteInferior:limiteSuperior
         end
         decomposition = 0;
         radius=fix(-(7/1300)*(distance)+(985/13));
-        if(radius<=0)
-            radius=1;
+        if(radius<0)
+        
         end
-        se = strel('disk', radius, decomposition);
         %BW = imdilate(plantIndividual, se);
         %imshow(BW);
         %title('BW')
