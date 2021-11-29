@@ -13,7 +13,7 @@ for k = limiteInferior:limiteSuperior
     %[B,M] = bwboundaries(plantIndividual,'noholes');
     %boundar = B{1};
     distance=sum(plantIndividual(:),"all");
-    if(distance<3000||distance>8500)
+    if(distance>3000&&distance<8500)
         distance, k
         
         if(distance>5200&&distance<8500)
