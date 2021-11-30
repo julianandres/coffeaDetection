@@ -2,15 +2,18 @@ function [] = procesarLabelsResult(labels,imageSegmented, nombreImagen, lote, ta
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-%limiteSuperior=250;
-limiteInferior=1639;
+%limiteSuperior=3000;
+limiteInferior=2001;
+imR=imbinarize(imageSegmented(:,:,3));
 for k = limiteInferior:limiteSuperior
-    [B,M] = bwboundaries(labels==k,'noholes');
+    k
+    [B,M] = bwboundaries(labels==k&imR,'noholes');
     points=py.list({});
-    boundar = B{1};
-    if ~isempty(B) && k>0 && length(boundar)>300 && length(boundar)<1300
+    length(B)
+    if ~isempty(B) && k>0 && length(B{1})>300 && length(B{1})<1300
+        boundar = B{1};
         for s=1:length(boundar)
-            if mod(s,2)==0
+            if mod(s,10)==0
                 pixX=boundar(s,1);
                 pixY=boundar(s,2);
                 transform=py.transformCoords.pixel2coord(pixY,pixX,nombreImagen);

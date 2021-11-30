@@ -1,20 +1,21 @@
-function [] = procesarLabelsResult(labels,imageSegmented)
+function [] = procesarLabelsResult(labels,imageSegmented, nombreImagen, lote, task)
 %UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
-limiteSuperior=max(labels, [], 'all');
-limiteSuperior=max(labels, [], 'all');
-limiteInferior=1;
-
+%%   Detailed explanation goes here
+%limiteSuperior=max(labels, [], 'all');
+limiteSuperior=250;
+limiteInferior=7;
+imR=imbinarize(imageSegmented(:,:,3));
 for k = limiteInferior:limiteSuperior
-    [B,M] = bwboundaries(labels==k,'noholes');
+    [B,M] = bwboundaries(labels==k&imR,'noholes');
     points=py.list({});
+    length(B)
     boundar = B{1};
     if ~isempty(B) && k>0 && length(boundar)>300 && length(boundar)<1300
         for s=1:length(boundar)
-            if mod(s,2)==0
+            if mod(s,10)==0
                 pixX=boundar(s,1);
                 pixY=boundar(s,2);
-                transform=py.transformCoords.pixel2coord(pixY,pixX,'odm_orthophoto_15_07.tif');
+                transform=py.transformCoords.pixel2coord(pixY,pixX,nombreImagen);
                 points.append(transform);
             end
         end
@@ -25,10 +26,10 @@ for k = limiteInferior:limiteSuperior
         minY=min(boundar(:,2));
         maxY=max(boundar(:,2));
         pointsImage=py.list({});
-        point1=py.transformCoords.pixel2coord(minX,minY,'odm_orthophoto_15_07.tif');
-        point2=py.transformCoords.pixel2coord(minX,maxY,'odm_orthophoto_15_07.tif');
-        point3=py.transformCoords.pixel2coord(maxX,maxY,'odm_orthophoto_15_07.tif');
-        point4=py.transformCoords.pixel2coord(maxX,minY,'odm_orthophoto_15_07.tif');
+        point1=py.transformCoords.pixel2coord(minY,minX,nombreImagen);
+        point2=py.transformCoords.pixel2coord(maxY,minX,nombreImagen);
+        point3=py.transformCoords.pixel2coord(maxY,maxX,nombreImagen);
+        point4=py.transformCoords.pixel2coord(minY,maxX,nombreImagen);
         pointsImage.append(point1);
         pointsImage.append(point2);
         pointsImage.append(point3);
@@ -36,13 +37,13 @@ for k = limiteInferior:limiteSuperior
         pointsImage.append(point1);
         centerX=maxX-minX;
         centerY=maxY-minY;
-        centerCoord=py.transformCoords.pixel2coord(centerY,centerX,'odm_orthophoto_15_07.tif');
+        centerCoord=py.transformCoords.pixel2coord(centerY,centerX,nombreImagen);
         %imagesWithBoundary = imageSegmentedgray.* uint8(L==ks);
         plantSeparated=imageSegmented(minX:maxX,minY:maxY,:);
         %imshow(plantSeparated)
         ndvi=obtainNDVIAvg(plantSeparated);
         statisticData=getStatisticsVariables(plantSeparated);
-        py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage);
+        py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage,task,lote);
     end
     %points
     %pause(2)

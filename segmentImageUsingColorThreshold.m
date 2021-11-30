@@ -1,4 +1,4 @@
-function [maskedRGBImage] = segmentImageUsingColorThreshold(RGB)
+function [maskedRGBImage] = segmentImageUsingColorThreshold(RGB,dilate)
 %createMask  Threshold RGB image using auto-generated code from colorThresholder app.
 %  [BW,MASKEDRGBIMAGE] = createMask(RGB) thresholds image RGB using
 %  auto-generated code from the colorThresholder app. The colorspace and
@@ -30,8 +30,10 @@ sliderBW = (I(:,:,1) >= channel1Min ) & (I(:,:,1) <= channel1Max) & ...
     (I(:,:,2) >= channel2Min ) & (I(:,:,2) <= channel2Max) & ...
     (I(:,:,3) >= channel3Min ) & (I(:,:,3) <= channel3Max);
 BW = sliderBW;
-
-[mask3]  = operationDilateBakground(BW);
+mask3=BW;
+if(dilate)
+ [mask3]  = operationDilateBakground(BW);
+end
 maskedRGBImage= RGB .* uint8(mask3);
 
 end

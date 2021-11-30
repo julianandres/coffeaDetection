@@ -4,10 +4,9 @@ function [labels] = ejecutarWatershedBackgroundMarkers(fgm4,gmag,imageSegmented)
 %%
 %bw = erodeMask(bw);
 imR=imbinarize(imageSegmented(:,:,3));
-se = strel('disk',6);
+se = strel('disk',7);
 imR2 = imdilate(imR,se);
 BW2 = edge(imR2,'Prewitt');
-BW2 = imdilate(BW2,strel('disk',3));
 imshow(BW2);
 %%
 bgm = BW2;

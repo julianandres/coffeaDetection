@@ -1,3 +1,4 @@
+from math import nan
 from osgeo import osr, gdal
 import mysql.connector
 from mysql.connector import errorcode
@@ -6,6 +7,9 @@ import numpy as np
 from area import area
 import requests
 import time
+from datetime import datetime
+
+
 
 def plantArrayToString(plant):
   print(plant.tolist())
@@ -17,8 +21,14 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lot
                       data
                   ]
               }
+              # datetime object containing current date and time
+  now = datetime.now()
+  # dd/mm/YY H:M:S
+  dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+  print("Inicio = %s "%positionL)
+  print("time = %s "%dt_string)
   areasCalc=area(obj)
-  volumenCalc=obtenerVolumen(pointsImage,task)
+  volumenCalc=0#obtenerVolumen(pointsImage,task)
   data = json.dumps(data)
   centro = json.dumps(centro)
   pointsImage=json.dumps(pointsImage)
@@ -46,6 +56,11 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lot
        print("Error Python")
     else:
       cnx.close()
+  now = datetime.now()
+  # dd/mm/YY H:M:S
+  dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+  print("FIN = %s "%positionL)
+  print("time = %s "%dt_string)
 
 
 def obtenerVolumen(data,task):

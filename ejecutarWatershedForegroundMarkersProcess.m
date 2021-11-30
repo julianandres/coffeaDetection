@@ -18,7 +18,7 @@ se2 = strel(ones(4,4));
 fgm2 = imclose(fgm,se2);
 fgm3 = imerode(fgm2,se2);
 
-fgm4 = bwareaopen(fgm3,15);
+fgm4 = fgmD;
 
 %I3 = labeloverlay(imageSegmented(:,:,3),fgm4);
 %imshow(I3)

@@ -11,7 +11,7 @@ function [BW] = operationDilateBakground(MASK)
 BW = MASK;
 
 % Dilate mask with disk
-radius = 5;
+radius = 3;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imdilate(BW, se);
