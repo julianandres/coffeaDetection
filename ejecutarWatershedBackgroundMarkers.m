@@ -4,7 +4,7 @@ function [labels] = ejecutarWatershedBackgroundMarkers(fgm4,gmag,imageSegmented)
 %%
 %bw = erodeMask(bw);
 imR=imbinarize(imageSegmented(:,:,3));
-se = strel('disk',7);
+se = strel('disk',6);
 imR2 = imdilate(imR,se);
 BW2 = edge(imR2,'Prewitt');
 imshow(BW2);
@@ -23,6 +23,3 @@ I4 = labeloverlay(imageSegmented(:,:,3),labelsToImage);
 imshow(I4)
 title('Markers and Object Boundaries Superimpo on Original Image')
 end
-
-
-
