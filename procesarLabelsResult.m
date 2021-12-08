@@ -2,12 +2,12 @@ function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task)
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-%limiteSuperior=1600;
-limiteInferior=7;
+limiteSuperior=620;
+limiteInferior=593;
 imR=imbinarize(imageSegmented(:,:,3));
 for k = limiteInferior:limiteSuperior
     imageFinale = labels==k&imR;
-    cantidadDeUnos= sum(imageFinale,'all');
+    cantidadDeUnos= sum(imageFinale,'all')
     k
     if(cantidadDeUnos>1960 && cantidadDeUnos<35000)
         imageCleared = morphProcessPlantDeleteBranches(imageFinale);
@@ -19,11 +19,10 @@ for k = limiteInferior:limiteSuperior
 
         [B,M] = bwboundaries(imageFinale,'noholes');
         points=py.list({});
-        length(B)
-        if ~isempty(B) && k>0 && length(B{1})>300 && length(B{1})<1300
+        if ~isempty(B) && k>0
             boundar = B{1};
             for s=1:length(boundar)
-                if mod(s,10)==0
+                if mod(s,5)==0
                     pixX=boundar(s,1);
                     pixY=boundar(s,2);
                     transform=py.transformCoords.pixel2coord(pixY,pixX,imageName);

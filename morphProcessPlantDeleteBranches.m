@@ -12,19 +12,19 @@ function [BW] = morphProcessPlantDeleteBranches(MASK)
 BW = MASK;
 
 % Erode mask with disk
-radius = 6;
+radius = 4;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imerode(BW, se);
 
 % Open mask with disk
-radius = 10;
+radius = 7;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imopen(BW, se);
 
 % Dilate mask with disk
-radius = 25;
+radius =9;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imdilate(BW, se);

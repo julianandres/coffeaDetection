@@ -2,11 +2,11 @@ function [fgm4,gmag] = ejecutarWatershedForegroundMarkersProcess(imageSegmented)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 
-gmag = imgradient(rgb2gray(imageSegmented));
+gmag = imgradient(imageSegmented(:,:,3));
 
 se = strel('disk',26);
 Io = imopen(imageSegmented(:,:,3),se);
-se2 = strel('disk',20);
+se2 = strel('disk',17);
 Io2 = imopen(imageSegmented(:,:,1),se2);
 
 fgm = imregionalmax(Io);
