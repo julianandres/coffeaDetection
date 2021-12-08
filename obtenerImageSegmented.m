@@ -1,4 +1,4 @@
-function [imagenRGB2Anios] = obtenerImageSegmented(imageName)
+function [imagenRGB2Anios,imagenRGB7Anios] = obtenerImageSegmented(imageName)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 I = imread(imageName);

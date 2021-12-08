@@ -2,8 +2,8 @@ function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task)
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-limiteSuperior=620;
-limiteInferior=593;
+limiteSuperior=199;
+limiteInferior=199;
 imR=imbinarize(imageSegmented(:,:,3));
 for k = limiteInferior:limiteSuperior
     imageFinale = labels==k&imR;
