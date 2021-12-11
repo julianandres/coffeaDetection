@@ -3,7 +3,7 @@ function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task)
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
 %limiteSuperior=397;
-limiteInferior=398;
+limiteInferior=0;
 imR=imbinarize(imageSegmented(:,:,3));
 for k = limiteInferior:limiteSuperior
     imageFinale = labels==k&imR;
