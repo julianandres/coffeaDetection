@@ -1,10 +1,11 @@
-function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task)
+function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task,fileNameDSM)
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-limiteSuperior=199;
-limiteInferior=199;
+limiteSuperior=129;
+limiteInferior=129;
 imR=imbinarize(imageSegmented(:,:,3));
+[A,R] = readgeoraster(fileNameDSM);
 for k = limiteInferior:limiteSuperior
     imageFinale = labels==k&imR;
     cantidadDeUnos= sum(imageFinale,'all')
@@ -13,16 +14,17 @@ for k = limiteInferior:limiteSuperior
         imageCleared = morphProcessPlantDeleteBranches(imageFinale);
         imageFinale = imageCleared&imageFinale;
        % se = strel('disk', radius, decomposition);
-       
+        [hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
         %discoToImage = imdilate(disco,se);
         %imageFinale=imageFinale&discoToImage;
-
+        altura=(hMax-hMin)*100;
+        %altura=-1;
         [B,M] = bwboundaries(imageFinale,'noholes');
         points=py.list({});
         if ~isempty(B) && k>0
             boundar = B{1};
             for s=1:length(boundar)
-                if mod(s,5)==0
+                if mod(s,3)==0
                     pixX=boundar(s,1);
                     pixY=boundar(s,2);
                     transform=py.transformCoords.pixel2coord(pixY,pixX,imageName);
@@ -53,11 +55,10 @@ for k = limiteInferior:limiteSuperior
             %imshow(plantSeparated)
             ndvi=obtainNDVIAvg(plantSeparated);
             statisticData=getStatisticsVariables(plantSeparated);
-            py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage,task,lote);
+            py.transformCoords.connectAndData(points,ndvi,centerCoord,k,statisticData,pointsImage,task,lote,altura);
         end
     end
     %points
     %pause(2)
 end
 end
-

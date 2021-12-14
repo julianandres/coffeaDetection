@@ -24,7 +24,7 @@ se = strel('disk', radius, decomposition);
 BW = imopen(BW, se);
 
 % Dilate mask with disk
-radius =5;
+radius =10;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imdilate(BW, se);

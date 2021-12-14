@@ -14,7 +14,7 @@ from datetime import datetime
 def plantArrayToString(plant):
   print(plant.tolist())
 
-def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lote):
+def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lote,altura):
   
   obj ={         "type": "Polygon",
                   "coordinates": [
@@ -38,10 +38,10 @@ def connectAndData(data,ndvi,centro,positionL,dataStatistic,pointsImage,task,lot
     try:
       cnx = mysql.connector.connect(user='root',password="root", database="suite2")
       print("*Valores a Insertar*")
-      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic,cod_lote,contorno_image_separated) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+      sql = "INSERT INTO plant (contorno,area,volumen,ndvi_avg,centro,posicion_algoritmo,data_statistic,cod_lote,contorno_image_separated,altura) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
       print(sql)
       mycursor = cnx.cursor()
-      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic,lote,pointsImage))
+      mycursor.execute(sql,(data,areasCalc,volumenCalc,ndvi,centro,positionL,dataStatistic,lote,pointsImage,altura))
       cnx.commit()
 
       print(mycursor.rowcount, "record inserted.")
