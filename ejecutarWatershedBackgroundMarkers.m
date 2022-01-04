@@ -3,6 +3,7 @@ function [labels] = ejecutarWatershedBackgroundMarkers(fgm4,gmag,imageSegmented)
 %   Detailed explanation goes here
 %%
 %bw = erodeMask(bw);
+
 imR=imbinarize(imageSegmented(:,:,3));
 se = strel('disk',6);
 imR2 = imdilate(imR,se);

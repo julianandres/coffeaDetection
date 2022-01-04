@@ -3,7 +3,7 @@ function [fgm4,gmag] = ejecutarWatershedForegroundMarkersProcess(imageSegmented)
 %   Detailed explanation goes here
 gmag = imgradient(imageSegmented(:,:,3));
 
-se = strel('disk',45);
+se = strel('disk',40);
 Io = imopen(imageSegmented(:,:,3),se);
 se2 = strel('disk',30);
 Io2 = imopen(imageSegmented(:,:,3),se2);
