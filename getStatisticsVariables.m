@@ -27,9 +27,9 @@ function [jsonVariables] = getStatisticsVariables(imagePlant)
     end
     
     %% Calc Of The MEAN by each band
-    acumulatedRed=0;
-    acumulatedGreen=0;
-    acumulatedBlue=0;
+    acumulatedRed=[];
+    acumulatedGreen=[];
+    acumulatedBlue=[];
     numberOfValues=0;
     for row=2:a
         for col=1:b
@@ -37,16 +37,16 @@ function [jsonVariables] = getStatisticsVariables(imagePlant)
                 greenBand = double(imagePlant(row,col,2));
                 blueBand = double(imagePlant(row,col,3));
                 if redBand~=0 && blueBand ~=0
-                    acumulatedRed = redBand+acumulatedRed;
-                    acumulatedGreen = greenBand+acumulatedGreen;
-                    acumulatedBlue = blueBand+acumulatedBlue;
+                    acumulatedRed(end+1) = redBand;
+                    acumulatedGreen(end+1) = greenBand;
+                    acumulatedBlue(end+1) = blueBand;
                     numberOfValues=numberOfValues+1;
                 end
         end
     end
-    meanRed=acumulatedRed/numberOfValues;
-    meanGreen=acumulatedGreen/numberOfValues;
-    meanBlue=acumulatedBlue/numberOfValues;
+    meanRed=sum(acumulatedRed)/numberOfValues;
+    meanGreen=sum(acumulatedGreen)/numberOfValues;
+    meanBlue=sum(acumulatedBlue)/numberOfValues;
     %% Calc Of Variance by Each band Using MEANS
     %
     % S^2 = (sum(Xi - Mean(X))/(n-1))
@@ -75,7 +75,13 @@ function [jsonVariables] = getStatisticsVariables(imagePlant)
     
     %% Definition Of RTA
     jsonVariables = jsonencode(struct("meanRed",meanRed,...
+                                      "minRed",min(acumulatedRed),...
+                                      "maxRed",max(acumulatedRed),...
+                                      "minGreen",min(acumulatedGreen),...
+                                      "maxGreen",max(acumulatedGreen),...
                                       "meanGreen",meanGreen,...
+                                      "minBlue",min(acumulatedBlue),...
+                                      "maxBlue",max(acumulatedBlue),...
                                       "meanBlue",meanBlue,...
                                       "maxHistIndexValue",maxHistIndexValue,...
                                       "maxHistRedIndexValue",maxHistRedIndexValue,...

@@ -12,7 +12,7 @@ function [BW] = morphProcessPlantDeleteBranches(MASK)
 BW = MASK;
 
 % Erode mask with disk
-radius = 6;
+radius = 8;
 decomposition = 0;
 se = strel('disk', radius, decomposition);
 BW = imerode(BW, se);
