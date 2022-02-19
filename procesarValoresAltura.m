@@ -7,8 +7,8 @@ function [hMax,hMin] = procesarValoresAltura(alturas)
         alturas(alturas==hMax)=[];
         [hMax,hMin] = procesarValoresAltura(alturas);
     end
-    if(hMax-hMin<1.44)
-        hMax = 1771.5; 
+    if(hMax-hMin<1.10)
+        hMax = 1771.3; 
         hMin=1770.0; 
     end
  end

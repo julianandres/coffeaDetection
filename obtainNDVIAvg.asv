@@ -59,18 +59,15 @@ for row=1:a
                 cgreenviAcumulated(end+1)=greenBand/meanGreen;
                 cnirviAcumulated(end+1)=blueBand/meanBlue;
                 
-                ndviValue=(blueBand-redBand)/(blueBand+redBand);
-                
                 gndviAcumulated(end+1) = (blueBand-greenBand)/(blueBand+greenBand);
                 mcariOneAcumulated(end+1)=1.2*(2.5*(blueBand-redBand)-1.3*(blueBand-greenBand));
                 mtviOneAcumulated(end+1)=1.2*(1.2*(blueBand-greenBand)-2.5*(redBand-greenBand));
                 ngrdiAcumulated(end+1) = (greenBand-redBand)/(greenBand+redBand);
-                ndviPoints(end+1)=ndviValue;
+                ndviPoints(end+1)=(blueBand-redBand)/(blueBand+redBand);
                 srviAcumulated(end+1)=blueBand/redBand;
                 
                 valueL=0.5;
-                rviValue = blueBand/redBand;
-                rviAcumulated(end+1)=rviValue;
+                rviAcumulated(end+1)=blueBand/redBand;
                 nrviAcumulated(end+1)=(rviValue-1)/(rviValue+1);
                 tviAcumulated(end+1)=sqrt(abs((ndviValue)+0.5));
                 saviAcumulated(end+1)=(1+valueL)*(blueBand-redBand)/(blueBand+redBand+valueL);

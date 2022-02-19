@@ -2,8 +2,8 @@ function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task,
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-%limiteSuperior=1079;
-limiteInferior=7;
+limiteSuperior=883;
+limiteInferior=883;
 imR=imbinarize(imageSegmented(:,:,3));
 [A,R] = readgeoraster(fileNameDSM);
 for k = limiteInferior:limiteSuperior
@@ -20,11 +20,11 @@ for k = limiteInferior:limiteSuperior
         points=py.list({});
         if ~isempty(B) && k>0
             boundar = B{1};
-            %[hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
+            [hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
             altura=-1;
             %discoToImage = imdilate(disco,se);
             %imageFinale=imageFinale&discoToImage;
-            %altura=(hMax-hMin)*100;
+            altura=(hMax-hMin)*100;
             for s=1:length(boundar)
                 if mod(s,3)==0
                     pixX=boundar(s,1);
@@ -48,6 +48,7 @@ for k = limiteInferior:limiteSuperior
             pointsImage.append(point2);
             pointsImage.append(point3);
             pointsImage.append(point4);
+            
             pointsImage.append(point1);
             centerX=maxX-minX;
             centerY=maxY-minY;
