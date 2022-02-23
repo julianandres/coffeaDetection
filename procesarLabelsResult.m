@@ -2,8 +2,8 @@ function [] = procesarLabelsResult(labels,imageSegmented, imageName, lote, task,
 %UNTITLED6 Summary of this function goes here
 %%   Detailed explanation goes here
 limiteSuperior=max(labels, [], 'all');
-limiteSuperior=231;
-limiteInferior=231;
+%limiteSuperior=600;
+limiteInferior=7;
 imR=imbinarize(imageSegmented(:,:,3));
 [A,R] = readgeoraster(fileNameDSM);
 for k = limiteInferior:limiteSuperior
@@ -14,6 +14,7 @@ for k = limiteInferior:limiteSuperior
         imageCleared = morphProcessPlantDeleteBranches(imageFinale);
         imageFinale = imageCleared&imageFinale;
        % se = strel('disk', radius, decomposition);
+       
         %[hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
         %discoToImage = imdilate(disco,se);
         altura=-1;
@@ -23,6 +24,13 @@ for k = limiteInferior:limiteSuperior
         points=py.list({});
         if ~isempty(B) && k>0
             boundar = B{1};
+            longitudAnterior=0;
+            for m=1:length(B)
+                if longitudAnterior<length(B{m})
+                    boundar=B{m};
+                    longitudAnterior=length(B{m});
+                end
+            end
             for s=1:length(boundar)
                 if mod(s,3)==0
                     pixX=boundar(s,1);

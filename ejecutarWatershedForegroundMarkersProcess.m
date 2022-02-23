@@ -6,7 +6,7 @@ gmag = imgradient(rgb2gray(imageSegmented));
 
 se = strel('disk',26);
 Io = imopen(imageSegmented(:,:,3),se);
-se2 = strel('disk',20);
+se2 = strel('disk',18);
 Io2 = imopen(imageSegmented(:,:,1),se2);
 
 fgm = imregionalmax(Io);
