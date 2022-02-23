@@ -23,6 +23,13 @@ for k = limiteInferior:limiteSuperior
         points=py.list({});
         if ~isempty(B) && k>0
             boundar = B{1};
+            longitudAnterior=0;
+            for m=1:length(B)
+                if longitudAnterior<length(B{m})
+                    boundar=B{m};
+                    longitudAnterior=length(B{m});
+                end
+            end
             for s=1:length(boundar)
                 if mod(s,3)==0
                     pixX=boundar(s,1);
