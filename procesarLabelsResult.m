@@ -15,11 +15,11 @@ for k = limiteInferior:limiteSuperior
         imageFinale = imageCleared&imageFinale;
        % se = strel('disk', radius, decomposition);
        
-        %[hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
+        [hMax,hMin] = obtenerAlturaMaximaYMinima(imageFinale,fileNameDSM,imageName,A,R);
         %discoToImage = imdilate(disco,se);
-        altura=-1;
+        %altura=-1;
         %imageFinale=imageFinale&discoToImage;
-        %altura=(hMax-hMin)*100;
+        altura=(hMax-hMin)*100;
         [B,M] = bwboundaries(imageFinale,'noholes');
         points=py.list({});
         if ~isempty(B) && k>0
